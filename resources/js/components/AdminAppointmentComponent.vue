@@ -1,17 +1,6 @@
 <template>
     <div class="container">
-        <div class="row">
-            <div v-for="item in items.data" :key="item.id" class="col-md-4">
-                <div class="card appointment-card">
-                    <span class="appointment-number">Randevu #{{item.id}}</span>
-                    <div class="appointment-detail">
-                        <span>{{ item.fullName }}</span>
-                        <span>{{ item.date }}</span>
-                        <span>{{ item.working }}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <appointment-item :data="items.data"></appointment-item>
         <div class="row mt-3">
             <div class="col-md-12">
                 <pagination :data="items" @pagination-change-page="getData"></pagination>

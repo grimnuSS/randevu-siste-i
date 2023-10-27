@@ -5,7 +5,7 @@
     <div class="row">
         <div id=form>
             <div class="col-md-12">
-                <randevu-form></randevu-form>
+                <appointment-form></appointment-form>
             </div>
         </div>
     </div>

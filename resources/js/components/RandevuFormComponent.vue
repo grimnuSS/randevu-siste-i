@@ -30,7 +30,7 @@
             <div class="row">
                 <div class="col-md-12 mb-3">
                     <div class="form-group">
-                        <input type="date" @change="selectDate" class="form-control" v-bind:min="this.date" v-model="date">
+                        <input type="date" @change="selectDate" class="form-control" :min="minDate" v-model="date">
                     </div>
                 </div>
             </div>
@@ -94,6 +94,7 @@ export default {
             phone: null,
             text: null,
             date: new Date().toISOString().slice(0, 10),
+            minDate: new Date().toISOString().slice(0, 10),
             workingHours: []
         }
     },
@@ -141,8 +142,9 @@ export default {
         selectDate: function () {
             axios.get('http://kurs-sitesi.local:443/public/api/working-hours/${this.date}')
                 .then((res) => {
-                    console.log(res.data);
-                    this.workingHours = res.data;
+                    if(res.status == 200){
+                        this.workingHours = res.data;
+                    }
                 })
         },
         validEmail: function (email) {
