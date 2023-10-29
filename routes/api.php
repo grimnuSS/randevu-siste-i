@@ -14,6 +14,8 @@ Route::post('/appointment-store', [indexController::class, 'appointmentStore']);
 
 Route::group(['namespace'=>'admin', 'prefix'=>'admin'], function (){
     Route::post('/process', [\App\Http\Controllers\api\admin\indexController::class, 'process']);
+    Route::get('/all', [\App\Http\Controllers\api\admin\indexController::class, 'all']);
+
     Route::get('/list', [\App\Http\Controllers\api\admin\indexController::class, 'getList']);
     Route::get('/today-list', [\App\Http\Controllers\api\admin\indexController::class, 'getTodayList']);;
     Route::get('/last-list', [\App\Http\Controllers\api\admin\indexController::class, 'getLastList']);

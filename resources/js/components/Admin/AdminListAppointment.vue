@@ -3,7 +3,10 @@
         <div v-for="item in data" class="col-md-4">
             <div class="card appointment-card">
                 <span class="appointment-number">Randevu
-                <span class="new-appointment" v-if="!item.isActive">Yeni</span>
+
+                    <span class="new-appointment bg-blue" v-if="item.isActive == null || item.isActive == 0">Yeni</span>
+                    <span class="new-appointment bg-green" v-if="item.isActive == 1">Onaylı</span>
+                    <span class="new-appointment bg-red" v-if="item.isActive == 2">İptal Edilen</span>
                 </span>
                 <div class="appointment-detail">
                     <span>{{ item.fullName }}</span>
@@ -26,20 +29,10 @@ export default {
     },
     methods:{
         appointmentOkey:function (id){
-            axios.post('http://kurs-sitesi.local:443/public/admin/process',{
-                type:1,
-                id:id
-            }).then((res)=>{
-                console.log(res);
-            })
+            this.$emit('updateOkey',id);
         },
         appointmentCancel:function (id){
-            axios.post('http://kurs-sitesi.local:443/public/admin/process',{
-                type:1,
-                id:id
-            }).then((res)=>{
-                console.log(res);
-            })
+            this.$emit('updateCancel',id);
         }
     }
 }
