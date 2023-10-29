@@ -22,7 +22,7 @@
                 <appointment-item @updateOkey="updateOkey" @updateCancel="updateCancel" :data="waiting.data"></appointment-item>
                 <div class="row mt-3">
                     <div class="col-md-12">
-                        <pagination :data="waiting" @pagination-change-page="getData"></pagination>
+                        <pagination :data="waiting" @pagination-change-page="waitingData"></pagination>
                     </div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                 <appointment-item @updateOkey="updateOkey" @updateCancel="updateCancel" :data="today.data"></appointment-item>
                 <div class="row mt-3">
                     <div class="col-md-12">
-                        <pagination :data="today" @pagination-change-page="getData"></pagination>
+                        <pagination :data="today" @pagination-change-page="todayData"></pagination>
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                 <appointment-item @updateOkey="updateOkey" @updateCancel="updateCancel" :data="list.data"></appointment-item>
                 <div class="row mt-3">
                     <div class="col-md-12">
-                        <pagination :data="list" @pagination-change-page="getData"></pagination>
+                        <pagination :data="list" @pagination-change-page="listData"></pagination>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                 <appointment-item @updateOkey="updateOkey" @updateCancel="updateCancel" :data="last.data"></appointment-item>
                 <div class="row mt-3">
                     <div class="col-md-12">
-                        <pagination :data="last" @pagination-change-page="getData"></pagination>
+                        <pagination :data="last" @pagination-change-page="lastData"></pagination>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                 <appointment-item @updateOkey="updateOkey" @updateCancel="updateCancel" :data="cancel.data"></appointment-item>
                 <div class="row mt-3">
                     <div class="col-md-12">
-                        <pagination :data="cancel" @pagination-change-page="getData"></pagination>
+                        <pagination :data="cancel" @pagination-change-page="cancelData"></pagination>
                     </div>
                 </div>
             </div>
@@ -63,6 +63,8 @@
 </template>
 
 <script>
+import io from 'socket.io-client';
+var socket = io('http://localhost:3000');
     export default {
         data(){
             return{
@@ -85,6 +87,9 @@
         },
         created() {
             this.getData();
+            socket.on('admin_appointment_list',()=>{
+                this.getData();
+            });
         },
         methods: {
             updateOkey(id){
@@ -103,19 +108,32 @@
                     this.getData();
                 })
             },
-            getData(page){
-                if(typeof page === 'undefined'){
-                    page = 1;
-                }
-                axios.get(`http://kurs-sitesi.local:443/public/api/admin/all/?page=${page}`)
+            getData(url = 'http://kurs-sitesi.local:443/public/api/admin/all') {
+                axios.get(url)
                     .then((res) => {
                         this.waiting = res.data.waiting;
                         this.list = res.data.list;
                         this.today = res.data.today;
                         this.last = res.data.last;
                         this.cancel = res.data.cancel;
-                    })
+                    });
+            },
+            waitingData(page) {
+                this.getData(`http://kurs-sitesi.local:443/public/api/admin/all?waiting_page=${page}`);
+            },
+            listData(page) {
+                this.getData(`http://kurs-sitesi.local:443/public/api/admin/all?list_page=${page}`);
+            },
+            todayData(page) {
+                this.getData(`http://kurs-sitesi.local:443/public/api/admin/all?today_page=${page}`);
+            },
+            lastData(page) {
+                this.getData(`http://kurs-sitesi.local:443/public/api/admin/all?last_page=${page}`);
+            },
+            cancelData(page) {
+                this.getData(`http://kurs-sitesi.local:443/public/api/admin/all?cancel_page=${page}`);
             }
+
         }
     }
 </script>

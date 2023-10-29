@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div v-for="item in data" class="col-md-4">
+        <div v-for="item in data" class="col-md-4 col-12 col-xs-12 admin-card">
             <div class="card appointment-card">
                 <span class="appointment-number">Randevu
 

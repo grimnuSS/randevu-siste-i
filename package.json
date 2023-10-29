@@ -1,6 +1,6 @@
 {
     "private": true,
-    "type": "module",
+    "type": "commonjs",
     "scripts": {
         "dev": "vite",
         "build": "vite build"
@@ -17,9 +17,14 @@
         "vue": "^3.2.37"
     },
     "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.18.2",
         "laravel-mix": "^6.0.49",
         "laravel-vue-pagination": "^4.1.1",
+        "socket.io": "^4.7.2",
+        "socket.io-client": "^4.7.2",
         "v-mask": "^2.3.0",
+        "vue-socket.io": "^3.0.10",
         "vue-the-mask": "^0.11.1"
     }
 }

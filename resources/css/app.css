@@ -1,3 +1,7 @@
+* {
+    font-family: 'Hind Siliguri', sans-serif;
+    color: #2d3748;
+}
 /* RandevuForm */
 ul, li {
     list-style-type: none;
@@ -97,3 +101,9 @@ li.errors{
 .bg-red{
     background: #ff0e32;
 }
+
+.admin-card{
+    display: inline-block;
+    padding: 10px;
+}
+
